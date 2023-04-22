@@ -1,208 +1,98 @@
 package com.company;
 
-// Importing ArrayList
-import java.util.ArrayList;
+// import scanner
+import java.util.Scanner;
 
 public class Main {
-    {
-        trees = 10;
-        creatures = 10;
-        
-    }
-}
 
-public class world {
-    public int NumberOfTrees;
-    public int NumberOfCreatures;
-    public int TotalTime;
-    public ArrayList Leaderboard;
-    private ArrayList ListOfCreatures;
-    private ArrayList ListOfTrees;
-    private ArrayList ListOfMatingCreatures;
-    private ArrayList ListOfCreaturesLookingForFood;
+    public static void main(String[] args) {
+        Boolean log = false;
+        // Create scanner
+        Scanner scanner = new Scanner(System.in);
+        // Ask the user if they would like to log the simulation
+        System.out.println("Would you like to log the simulation? This will print most important actions. Otherwise only deaths will be logged. (y/n)");
+        String logSim = scanner.next();
+        // If the user wants to log the simulation
+        if (logSim.equals("y")) {
+            // Set the log variable to true
+            log = true;
+        }
+        // If the user does not want to log the simulation
+        else {
+            // Set the log variable to false
+            log = false;
+        }
+        // Ask the user for the amount of random trees they would like created
+        System.out.println("How many trees would you like to create?");
+        int trees = scanner.nextInt();
+        // Ask the user for the amount of random creatures they would like created
+        System.out.println("How many randomly generated creatures would you like to create? (Custom creatures will be created afterwards)");
+        int creatures = scanner.nextInt();
+        // Create the world
+        world World1 = new world(trees, creatures, log);
+        // Ask the user if they would like to create custom creatures
+        System.out.println("Would you like to create custom creatures? (y/n)");
+        String customCreatures = scanner.next();
+        // If the user wants to create custom creatures
+        if (customCreatures.equals("y")) {
+            // Ask the user how many custom creatures they would like to create
+            System.out.println("How many custom creatures would you like to create?");
+            int customCreaturesAmount = scanner.nextInt();
+            for (int i = 0; i < customCreaturesAmount; i++) {
+                // Ask the user for the name of the creature, the amount of food it starts with, the amount of attack power it has, the probability of finding food, and the probability of reproducing
+                System.out.println("What would you like to name the creature?");
+                String Name = scanner.next();
+                System.out.println("How much food would you like the creature to start with? Suggested to be within 0-5");
+                int food = scanner.nextInt();
+                System.out.println("How much attack power would you like the creature to have? Suggested to be within 0-5");
+                int attackPower = scanner.nextInt();
+                System.out.println("What would you like the probability of finding food to be? Must be between 0 and 1 or it will either always find food or never find food");
+                double findFoodProbability = scanner.nextDouble();
+                System.out.println("What would you like the probability of reproducing to be? Must be between 0 and 1 or it will either always reproduce or never reproduce");
+                double reproduceProbability = scanner.nextDouble();
+                // Create the creature
+                World1.createCustomCreature(Name, food, attackPower, findFoodProbability, reproduceProbability);
+            }
+        }
+        // Ask the user for the amount of time they would like to run the simulation for
+        System.out.println("How much time would you like to run the simulation for?");
+        int time = scanner.nextInt();
+        while (true) {
+            // Run the simulation
+            World1.ageTime(time);
+            // Ask the user if they would like to see the leaderboard or continue the simulation
+            System.out.println("Would you like to see the leaderboard or continue the simulation? (l/c)");
+            String leaderboardOrContinue = scanner.next();
+            if (leaderboardOrContinue.equals("l")) {
+                // Print the leaderboard after asking the user how many creatures they would like to see
+                System.out.println("How many creatures would you like to see?");
+                int leaderboardAmount = scanner.nextInt();
+                World1.printTopCreatures(leaderboardAmount);
+                // Ask the user if they would like to continue the simulation
+                System.out.println("Would you like to continue the simulation? (y/n)");
+                String continueSimulation = scanner.next();
+                if (continueSimulation.equals("y")) {
+                    // Ask the user how much time they would like to run the simulation for
+                    System.out.println("How much time would you like to run the simulation for?");
+                    time = scanner.nextInt();
+                } else {
+                    // If the user does not want to continue the simulation, break the loop
+                    break;
+                }
+            } else if (leaderboardOrContinue.equals("c")) {
+                // Ask the user how much time they would like to run the simulation for
+                System.out.println("How much time would you like to run the simulation for?");
+                time = scanner.nextInt();
+            } else {
+                // If the user enters an invalid input, ask them again
+                System.out.println("Invalid input, please try again");
+            }
+        }
+        // Close the Scanner
+        scanner.close();
 
-
-    public world(int NumberOfTrees, int NumberOfCreatures) {
-        this.NumberOfTrees = NumberOfTrees;
-        this.NumberOfCreatures = 10;
-        TotalTime = 0;
-        Leaderboard = new ArrayList();
-        ListOfCreatures = new ArrayList();
-        ListOfTrees = new ArrayList();
-        ListOfMatingCreatures = new ArrayList();
-        ListOfCreaturesLookingForFood = new ArrayList();
-    }
-    
-    public createCustomCreature() {
-        // Create a creature with custom stats
-
-    }
-
-    public createRandomCreature() {
-        // Create a creature with random stats
-    }
-
-    public createCustomTree() {
-        // Create a tree with custom stats
-    }
-
-    public createRandomTree() {
-        // Create a tree with random stats
-    }
-
-    public appendToLeaderboard() {
-        // Append a creature score to the leaderboard
-    }
-
-    public appendToMatingCreatures() {
-        // Append a creature to the mating creatures list
-    }
-
-    public appendToCreaturesLookingForFood() {
-        // Append a creature to the creatures looking for food list
-    }
-
-    private ageTime() {
-        // Age the time by 1
-    }
-
-    private mateCreatures() {
-        // Mate creatures
-    }
-}
-
-public class creature {
-    public string Name;
-    public int Food;
-    public int Age;
-    public int TimesReproduced;
-    public int score;
-    public int AttackPower;
-    public int TreeLocation;
-    public boolean AttemptingToMate;
-    public boolean LookingForFood;
-    private double FindFoodProbability;
-    private double ReproduceProbability;
-
-    public creature(string Name, int Food, int AttackPower, double FindFoodProbability, double ReproduceProbability){
-        this.Name = Name;
-        this.Food = Food;
-        this.Age = 0;
-        this.TimesReproduced = 0;
-        this.score = 0;
-        this.AttackPower = AttackPower;
-        this.TreeLocation = -1;
-        this.AttemptingToMate = false;
-        this.LookingForFood = false;
-        this.FindFoodProbability = FindFoodProbability;
-        this.ReproduceProbability = ReproduceProbability;
-    }
-
-    public changeName() {
-        // Change the name of the creature
-    }
-
-    public changeFood() {
-        // Change the amount of food the creature has
-    }
-
-    public changeAge() {
-        // Change the age of the creature
-    }
-
-    public changeTimesReproduced() {
-        // Change the amount of times the creature has reproduced
-    }
-
-    public findFood() {
-        // Find food
-    }
-
-    public findMate() {
-        // Find a mate
-    }
-
-    public die() {
-        // Die
-    }
-
-    private rollFindFood() {
-        // Roll to find food
-    }
-
-    private rollFindMate() {
-        // Roll to look for a mate
-    }
-}
-
-public class tree {
-    public int Sum;
-    public int ChanceOfOne;
-    public int ChanceOfTwo;
-    public int ChanceOfThree;
-    public int ChanceOfFour;
-    public int ChanceOfFive;
-    private double ChanceOfOneProbability;
-    private double ChanceOfTwoProbability;
-    private double ChanceOfThreeProbability;
-    private double ChanceOfFourProbability;
-    private double ChanceOfFiveProbability;
-
-    public tree(int ChanceOfOne, int ChanceOfTwo, int ChanceOfThree, int ChanceOfFour, int ChanceOfFive) {
-        this.Sum = sum(ChanceOfOne, ChanceOfTwo, ChanceOfThree, ChanceOfFour, ChanceOfFive);
-        this.ChanceOfOne = ChanceOfOne;
-        this.ChanceOfTwo = ChanceOfTwo;
-        this.ChanceOfThree = ChanceOfThree;
-        this.ChanceOfFour = ChanceOfFour;
-        this.ChanceOfFive = ChanceOfFive;
-        this.ChanceOfOneProbability = ChanceOfOne / Sum;
-        this.ChanceOfTwoProbability = ChanceOfTwo / Sum;
-        this.ChanceOfThreeProbability = ChanceOfThree / Sum;
-        this.ChanceOfFourProbability = ChanceOfFour / Sum;
-        this.ChanceOfFiveProbability = ChanceOfFive / Sum;
-    }
-
-    public spawnFood() {
-        // Spawn food
-    }
-
-    public changeChanceOfOne() {
-        // Change the chance of one food spawning
-    }
-
-    public changeChanceOfTwo() {
-        // Change the chance of two food spawning
-    }
-
-    public changeChanceOfThree() {
-        // Change the chance of three food spawning
-    }
-
-    public changeChanceOfFour() {
-        // Change the chance of four food spawning
-    }
-
-    public changeChanceOfFive() {
-        // Change the chance of five food spawning
-    }
-
-    public printSum() {
-        // Print the sum of the chances
-    }
-
-    public printTrueProbabilities() {
-        // Print the true probabilities of the chances
-    }
-
-    public die() {
-        // Die
-    }
-
-    private changeSum() {
-        // Change the sum of the chances
-    }
-
-    private updateTrueProbabilities() {
-        // Update the true probabilities of the chances
+        // Tell the user the simulation has ended
+        System.out.println("Simulation has ended");
+        System.out.println("Thank you for using the simulation, Goodbye!");
     }
 }
